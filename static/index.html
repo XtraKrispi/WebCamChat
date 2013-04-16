@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="webcamApp">
+<head>
+	<title>WebCam Chat!</title>
+	<link rel="stylesheet" href="/static/css/screen.css" />
+</head>
+<body>
+	<div ng-controller="WebCamCtrl">
+		<h1>WebCam Chat with WebRTC and Socket.IO</h1>
+		<div mywebcam width="128" height="96"></div>
+		<div ng-repeat="client in clients" >
+			<canvas width="128" height="96" webcam-canvas image-data="client.imageData" socket-id="client.id"></canvas>
+		</div>
+	</div>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="/static/js/vendor/underscore-min.js"></script>
+	<script type="text/javascript" src="/static/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/vendor/angular.min.js"></script>
+
+	<script type="text/javascript" src="/static/js/app.js"></script>
+	<script type="text/javascript" src="/static/js/controllers.js"></script>
+	<script type="text/javascript" src="/static/js/directives.js"></script>
+	<script type="text/javascript" src="/static/js/services.js"></script>
+</body>
+</html>
