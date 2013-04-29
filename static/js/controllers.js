@@ -1,6 +1,8 @@
 var controllers = angular.module('controllers', ['services', 'directives']);
 
 app.controller('WebCamCtrl', ['$scope', 'socket', function($scope, socket){
+	$scope.options = {};
+
 	$scope.clients = [];
 
 	socket.on('newdata', function(data){
@@ -18,6 +20,8 @@ app.controller('WebCamCtrl', ['$scope', 'socket', function($scope, socket){
 		var index = _($scope.clients).indexOf(function(client){ return client.id == data.id });
 		removeFromArray($scope.clients, index);
 	});
+
+	$scope.username = prompt("What's your name?");
 
 	var removeFromArray = function(array, from, to) {
 		if (array && array.length > 0){

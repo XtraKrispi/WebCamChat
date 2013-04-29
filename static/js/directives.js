@@ -1,11 +1,12 @@
 var directives = angular.module('directives', ['services']);
 
-directives.directive('webcamCanvas', function(){
+directives.directive('webcamCanvas', ['imageManipulation', function(imageManipulation){
 	return {
 		restrict: 'A',
 		scope: {
 			data: '=imageData',
-			id: '=socketId'
+			id: '=socketId',
+			options: '=options'
 		},
 		link: function(scope, elem, attrs){
 			scope.$watch('data', function(newValue, oldValue){
@@ -23,6 +24,14 @@ directives.directive('webcamCanvas', function(){
 	          	    imageData.data[i+3] = 255;
 	          	} 
 
+	          	if (scope.options.flip){
+	          		imageData.data = imageManipulation.flipImage(imageData.data);
+	          	}
+
+	          	if (scope.options.invert){
+	          		imageData.data = imageManipulation.invertImage(imageData.data);
+	          	}
+
 				context.putImageData(imageData, 0, 0);
 
 			});
@@ -30,14 +39,15 @@ directives.directive('webcamCanvas', function(){
 			elem.attr('id', scope.id)
 		}
 	}
-});
+}]);
 
 directives.directive('mywebcam', ['socket', function(socket){
 	return {
 		retrict: 'A',
 		scope: {
 			width: '@width',
-			height: '@height'
+			height: '@height',
+			username: '='
 		},
 		template: '<video id="myVideo"></video><canvas id="myFeed" width="{{width}}" height="{{height}}"></canvas><canvas id="myDisplay" width="64" height="48"></canvas>',
 		link: function(scope, elem, attrs){
@@ -92,7 +102,7 @@ directives.directive('mywebcam', ['socket', function(socket){
 			    	bytearray[j++] = canvaspixelarray[i+2];
 			    }
 
-				socket.emit('senddata', {imageData: bytearray});
+				socket.emit('senddata', {imageData: bytearray, username: scope.username});
 
 				//displayContext.putImageData(imgData, 0, 0);
 				setTimeout(function(){ streamFeed(); }, 1000/15);

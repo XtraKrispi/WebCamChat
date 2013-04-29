@@ -2,14 +2,23 @@
 <html ng-app="webcamApp">
 <head>
 	<title>WebCam Chat!</title>
+	<link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.css" />
 	<link rel="stylesheet" href="/static/css/screen.css" />
 </head>
 <body>
-	<div ng-controller="WebCamCtrl">
+	<div ng-controller="WebCamCtrl" class="clearfix">
 		<h1>WebCam Chat with WebRTC and Socket.IO</h1>
-		<div mywebcam width="128" height="96"></div>
-		<div ng-repeat="client in clients" >
-			<canvas width="128" height="96" webcam-canvas image-data="client.imageData" socket-id="client.id"></canvas>
+		<div class="client pull-left well">
+			<h3 ng-bind="username"></h3>
+			<div mywebcam width="128" height="96" username="username"></div>
+		</div>
+		<div class="pull-left span9">
+			<div ng-repeat="client in clients" class="client pull-left well">
+				<h3>{{client.username}}</h3>
+				<label>Flip? <input type="checkbox" ng-model="options.flip" /></label>
+				<label>Invert? <input type="checkbox" ng-model="options.invert" /></label>
+				<canvas width="128" height="96" webcam-canvas image-data="client.imageData" socket-id="client.id" options="options"></canvas>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>

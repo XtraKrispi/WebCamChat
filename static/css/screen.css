@@ -1,3 +1,11 @@
-#myFeed {
+#myFeed, #myDisplay {
 	display:none;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}
+
+.client {
+	margin-left: 20px;
 }

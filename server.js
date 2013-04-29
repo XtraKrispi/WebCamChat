@@ -10,7 +10,7 @@ io.sockets.on('connection', function (socket) {
 	console.log('connected');
 
   	socket.on('senddata', function(data){
-  		socket.broadcast.emit('newdata', { id: socket.id, imageData: data.imageData});
+  		socket.broadcast.emit('newdata', { id: socket.id, imageData: data.imageData, username: data.username});
   	});
 
   	socket.on('disconnect', function(){
