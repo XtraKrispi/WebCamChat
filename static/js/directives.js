@@ -3,15 +3,18 @@ var directives = angular.module('directives', ['services']);
 directives.directive('webcamCanvas', ['imageManipulation', function(imageManipulation){
 	return {
 		restrict: 'A',
+		template: '<label>Flip? <input type="checkbox" ng-model="options.flip" /></label><label>Invert? <input type="checkbox" ng-model="options.invert" /></label><canvas width="{{width}}" height="{{height}}" />',
 		scope: {
 			data: '=imageData',
 			id: '=socketId',
-			options: '=options'
+			width: '@',
+			height: '@'
 		},
 		link: function(scope, elem, attrs){
+			scope.options = {};
 			scope.$watch('data', function(newValue, oldValue){
 				var bytearray = new Uint8Array(newValue);
-				var context = elem[0].getContext('2d');
+				var context = elem.find('canvas')[0].getContext('2d');
 				var imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
 	 
 	           	var imgdatalen = imageData.data.length;
