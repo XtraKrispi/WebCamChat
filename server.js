@@ -1,10 +1,18 @@
+process.env.PWD = process.cwd();
+
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io', { rememberTransport: false}).listen(server, {log: false});
 var port = process.env.PORT || 3000;
-app.use("/", express.static(__dirname + '/static'));
-app.use("/static", express.static(__dirname + '/static'));
+app.use("/", express.static(process.env.PWD + '/static'));
+app.use("/static", express.static(process.env.PWD + '/static'));
+
+// assuming io is the Socket.IO server object
+io.configure('production', function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 io.sockets.on('connection', function (socket) {
 	console.log('connected');
