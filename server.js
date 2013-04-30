@@ -8,12 +8,6 @@ var port = process.env.PORT || 3000;
 app.use("/", express.static(process.env.PWD + '/static'));
 app.use("/static", express.static(process.env.PWD + '/static'));
 
-// assuming io is the Socket.IO server object
-io.configure('production', function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
-
 io.sockets.on('connection', function (socket) {
 	console.log('connected');
 

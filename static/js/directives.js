@@ -39,7 +39,7 @@ directives.directive('webcamCanvas', ['imageManipulation', function(imageManipul
 
 			});
 
-			elem.attr('id', scope.id)
+			elem.attr('id', scope.id);
 		}
 	}
 }]);
