@@ -3,7 +3,7 @@ var directives = angular.module('directives', ['services']);
 directives.directive('webcamCanvas', ['imageManipulation', function(imageManipulation){
 	return {
 		restrict: 'A',
-		template: '<label>Flip? <input type="checkbox" ng-model="options.flip" /></label><label>Invert? <input type="checkbox" ng-model="options.invert" /></label><canvas width="{{width}}" height="{{height}}" />',
+		template: '<label class="checkbox">Flip? <input type="checkbox" ng-model="options.flip" /></label><label class="checkbox">Invert? <input type="checkbox" ng-model="options.invert" /></label><canvas width="{{width}}" height="{{height}}" />',
 		scope: {
 			data: '=imageData',
 			id: '=socketId',
@@ -65,7 +65,6 @@ directives.directive('mywebcam', ['socket', function(socket){
 					video: true,
 					audio: false
 				}, onSuccess, function(){});
-				// do something
 			} else {
 				alert('webRTC is not supported in this browser. You can only watch');
 			}
@@ -87,8 +86,6 @@ directives.directive('mywebcam', ['socket', function(socket){
 			}
 
 			function streamFeed(){
-				//requestAnimationFrame(streamFeed);
-				//displayContext.clearRect(0, 0, display.width, display.height);
 				feedContext.drawImage(video, 0, 0, feed.width, feed.height);
 
 				var imgData = feedContext.getImageData(0, 0, feed.width, feed.height);
@@ -107,7 +104,6 @@ directives.directive('mywebcam', ['socket', function(socket){
 
 				socket.emit('senddata', {imageData: bytearray, username: scope.username});
 
-				//displayContext.putImageData(imgData, 0, 0);
 				setTimeout(function(){ streamFeed(); }, 1000/15);
 			}
 		}
