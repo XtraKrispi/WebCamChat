@@ -52,7 +52,7 @@ directives.directive('mywebcam', ['socket', function(socket){
 			height: '@height',
 			username: '='
 		},
-		template: '<video id="myVideo"></video><canvas id="myFeed" width="{{width}}" height="{{height}}"></canvas><canvas id="myDisplay" width="64" height="48"></canvas>',
+		template: '<video id="myVideo" width="{{width * 2}}" height="{{height * 2}}"></video><canvas id="myFeed" width="{{width}}" height="{{height}}"></canvas><canvas id="myDisplay" width="64" height="48"></canvas>',
 		link: function(scope, elem, attrs){
 			var video = elem.find('video')[0];
 			var feed = elem.find('#myFeed')[0];
